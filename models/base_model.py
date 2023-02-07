@@ -2,10 +2,9 @@
 """
 This is the base_model module which contains the class BaseModel
 """
-
-
 import uuid
 from datetime import datetime
+
 
 class BaseModel:
     """
