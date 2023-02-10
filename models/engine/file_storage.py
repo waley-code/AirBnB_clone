@@ -3,7 +3,7 @@
 This is the file_storage module which contains the FileStorage class
 """
 from json import load, dump
-
+from importlib import import_module
 
 class FileStorage:
     """
@@ -50,9 +50,15 @@ class FileStorage:
         try:
             with open(self.__file_path, 'r', encoding='utf-8') as f:
                 data = load(f)
-                from models.base_model import BaseModel
+                s = {'BaseModel': "base_model", 'User': "user",
+                     'State': "state", 'City':"city",
+                     'Amenity': "amenity",'Place':"place",
+                     'Review':"review"}
                 for value in data.values():
-                    self.new(eval(value['__class__'])(**value))
+                    cls_name = value['__class__']
+                    mod = import_module(f'models.{s[cls_name]}')
+                    Class = getattr(mod, cls_name)
+                    self.new(Class(**value))
 
         except FileNotFoundError:
             pass
