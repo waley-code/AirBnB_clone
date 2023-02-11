@@ -34,6 +34,28 @@ class HBNBCommand(cmd.Cmd):
         """
         return True
 
+    def precmd(self, line):
+        """Handle command line input and parse it if necessary"""
+        if "." in line:
+            args = line.replace("(", " ").strip(")").split(".")
+            args.reverse()
+            cm_str = args[0].split()
+            last = ""
+            if len(cm_str) > 1:
+                last = cm_str[1:]
+                if len(last) > 1:
+                    last = [x.replace('"', "") for x in last]
+                    last = f'{last[0]} {last[1]} {last[2]}'
+                    last = last.replace(",", "")
+                else:
+                    last = last[0].strip('"')
+            line = f'{cm_str[0]} {args[1]} {last}'
+        return line
+
+    def emptyline(self):
+        """Do nothing when an empty line is passed"""
+        pass
+
     def do_create(self, line):
         """creates a new instance of any of the existing Classes for this
         project, saves it to the JSON file and prints the id
@@ -191,6 +213,15 @@ class HBNBCommand(cmd.Cmd):
                 Class = getattr(module, cls_name)
                 storage.new(Class(**dic))
                 storage.save()
+
+    def do_count(self, line):
+        """print number of instances of a class"""
+        count = 0
+        line = line.strip()
+        for key, value in self.__data.items():
+            if key.split(".")[0] == line:
+                count += 1
+        print(count)
 
 
 if __name__ == '__main__':
