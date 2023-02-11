@@ -5,6 +5,7 @@ This is the file_storage module which contains the FileStorage class
 from json import load, dump
 from importlib import import_module
 
+
 class FileStorage:
     """
     This serializes instances to a JSON file and deserializes
@@ -51,9 +52,9 @@ class FileStorage:
             with open(self.__file_path, 'r', encoding='utf-8') as f:
                 data = load(f)
                 s = {'BaseModel': "base_model", 'User': "user",
-                     'State': "state", 'City':"city",
-                     'Amenity': "amenity",'Place':"place",
-                     'Review':"review"}
+                     'State': "state", 'City': "city",
+                     'Amenity': "amenity", 'Place': "place",
+                     'Review': "review"}
                 for value in data.values():
                     cls_name = value['__class__']
                     mod = import_module(f'models.{s[cls_name]}')

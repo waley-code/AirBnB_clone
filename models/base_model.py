@@ -33,7 +33,9 @@ class BaseModel:
             storage.new(self)
 
     def __str__(self):
-        """print: [<class name>] (<self.id>) <self.__dict__>"""
+        """
+        print: [<class name>] (<self.id>) <self.__dict__>
+        """
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
@@ -44,7 +46,9 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
-        # returns a dictionary of the object instance
+        """
+        returns a dictionary of the object instance
+        """
         new_dic = {
             i: (j.isoformat() if i in ["created_at", "updated_at"] else j)
             for i, j in self.__dict__.items()
