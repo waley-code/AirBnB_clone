@@ -1,9 +1,21 @@
 # AirBnB clone
 
-### About the project
-----------to be filled--------------------
+## About the project
+This project creates a basic clone of the popular AirBnB consisting of;
+	Back-End
+		- console like a minishell, 
+		- file storage/MySQL Database
+		- Rest APIs
+		- Deployment
+	Front-End
+		- structure in form of HTML/CSS
+	
+----------More to be filled--------------------
 
-## Learning Objectives
+### Command interpreter or console
+	This console works in interactive and non-interactive mode;
+----------to be filled--------------------
+### Learning Objectives
 At the end of this project, we were expected to be able to explain to anyone, without the help of Google:
 ### General
 	- How to create a Python package
@@ -52,3 +64,4 @@ But also in non-interactive mode:
 	EOF  help  quit
 	(hbnb) 
 	$
+----------More to be filled--------------------
