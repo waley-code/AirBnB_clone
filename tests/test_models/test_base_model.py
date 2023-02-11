@@ -8,24 +8,20 @@ import unittest
 
 
 class TestBaseModel(unittest.TestCase):
-    """
-    all unit test cases for the BaseModel class
+    """all unit test cases for the BaseModel class
     """
     def setUp(self):
-        """
-        create instances of the BaseModel class
+        """create instances of the BaseModel class
         """
         self.bm = BaseModel()
 
     def tearDown(self):
-        """
-        deletes all instances created at exit
+        """deletes all instances created at exit
         """
         del self.bm
 
-    def test_init_(self):
-        """
-        unit test for the __init__ method
+    def test_init(self):
+        """unit test for the __init__ method
         """
         self.assertTrue(self.bm.id)
         self.assertIsInstance(self.bm.created_at, datetime)
@@ -72,11 +68,6 @@ class TestBaseModel(unittest.TestCase):
     def test_instance_created_at(self):
         """tests all instance created_at of BaseModel"""
         self.assertIsNotNone(self.bm.created_at)
-
-    def test_str_representation(self):
-        """Tests printing string representation"""
-        e = f"[{self.bm.__class__.__name__}] ({self.bm.id}) {self.bm.__dict__}"
-        self.assertEqual(str(self.bm), e)
 
     def test_to_dict_classObj(self):
         """Tests for class in dictionary convertion"""

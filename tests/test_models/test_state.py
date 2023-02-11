@@ -2,13 +2,10 @@
 """Test suits for State module"""
 
 import unittest
-from datetime import datetime
-import models
-from models.base_model import BaseModel
 from models.state import State
 
 
-class TestsState(unittest.TestCase):
+class TestState(unittest.TestCase):
     """Tests methods in State class"""
 
     def setUp(self):
@@ -20,7 +17,6 @@ class TestsState(unittest.TestCase):
     def test_name(self):
         """Tests name inputs"""
         self.assertEqual(type((self.m).name), str)
-        pass
 
 
 if __name__ == '__main__':

@@ -2,13 +2,10 @@
 """Test suits for amenities class"""
 
 import unittest
-from datetime import datetime
-import models
-from models.base_model import BaseModel
 from models.amenity import Amenity
 
 
-class TestsAmenity(unittest.TestCase):
+class TestAmenity(unittest.TestCase):
     """Tests methods in amenities class"""
 
     def setUp(self):
@@ -22,7 +19,6 @@ class TestsAmenity(unittest.TestCase):
     def test_name(self):
         """Tests name inputs"""
         self.assertEqual(type((self.m).name), str)
-        pass
 
 
 if __name__ == '__main__':
