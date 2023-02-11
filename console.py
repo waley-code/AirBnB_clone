@@ -17,7 +17,7 @@ class HBNBCommand(cmd.Cmd):
         data (dict): all objects that exist in the json file
         cls_dicts (dict): all classes with their respective module name
     """
-    prompt = "(hbnb) "
+    prompt = "(hbnb)"
     __models = ('BaseModel', 'User', 'State', 'City', 'Amenity', 'Place',
                 'Review')
     __data = storage.all()
@@ -42,12 +42,12 @@ class HBNBCommand(cmd.Cmd):
         creates a new instance of any of the existing Classes for this
         project, saves it to the JSON file and prints the id
         """
-        line = line.strip()
         if not line:
             print("** class name missing **")
         elif line not in self.__models:
             print("** class doesn't exist **")
         else:
+            line = line.strip()
             f_name = f'models.{self.__cls_dicts[line]}'
             module = import_module(f_name)
             Class = getattr(module, line)
@@ -64,6 +64,7 @@ class HBNBCommand(cmd.Cmd):
         if not line:
             print("** class name missing **")
             return
+        line = line.strip()
         args = line[:].split()
         if args[0] not in self.__models:
             print("** class doesn't exist **")
@@ -86,6 +87,7 @@ class HBNBCommand(cmd.Cmd):
         if not line:
             print("** class name missing **")
             return
+        line = line.strip()
         args = line[:].split()
         if args[0] not in self.__models:
             print("** class doesn't exist **")
@@ -107,6 +109,7 @@ class HBNBCommand(cmd.Cmd):
         the class name
         """
         str_rep = []
+        line = line.strip()
         if line and line in self.__models:
             for key, value in self.__data.items():
                 if key.split(".")[0] == line:
@@ -126,6 +129,7 @@ class HBNBCommand(cmd.Cmd):
         updating atrribute then save the change into the JSON file
         """
         dont = ('id', 'updated_at', 'created_at')
+        line = line.strip()
         args = line[:].split()
         size = len(args)
         if size == 0:
