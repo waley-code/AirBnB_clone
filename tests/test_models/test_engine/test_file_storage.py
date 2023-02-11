@@ -33,10 +33,14 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Tests for the save method"""
         self.storage.new(self.model)
-        old_content = open('file.json', 'r').read()
+        old_f = open('file.json', 'r')
+        old_content = old_f.read()
         self.storage.save()
-        new_content = open('file.json', 'r').read()
+        new_f = open('file.json', 'r')
+        new_content = new_f.close()
         self.assertNotEqual(old_content, new_content)
+        old_f.close()
+        new_f.close()
 
     def test_reload(self):
         """Tests for the reload method"""
