@@ -1,7 +1,19 @@
 #!/usr/bin/python3
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
+    """
+    This stores reviews related to attr below
+
+    Attributes:
+          user_id (str), city_id (str), name (str),
+          description (str), number_rooms (int),
+          number_bathrooms (int), max_guest (int),
+          price_by_night (int), latitude (float),
+          longitude (float), amenity_ids (list),
+    """
+
     city_id = ""
     user_id = ""
     name = ""
@@ -12,4 +24,4 @@ class Place(BaseModel):
     price_by_night = 0
     latitude = 0.0
     longitude = 0.0
-    amentity_ids = []
+    amenity_ids = []
