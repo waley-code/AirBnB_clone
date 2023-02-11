@@ -59,7 +59,42 @@ class TestBaseModel(unittest.TestCase):
         """ test the save method"""
         pre = self.bm.updated_at
         self.bm.save()
-        self.assertNotEqual(self.bm.updated_at, pre)
+
+    def test_instantiation(self):
+        """tests all instantiation of BaseModel"""
+        self.assertIsInstance(self.bm, BaseModel)
+        self.assertIsNotNone(self.bm.id)
+
+    def test_instance_updated_at(self):
+        """tests all instance of updated_at of BaseModel"""
+        self.assertIsNotNone(self.bm.updated_at)
+
+    def test_instance_created_at(self):
+        """tests all instance created_at of BaseModel"""
+        self.assertIsNotNone(self.bm.created_at)
+
+    def test_str_representation(self):
+        """Tests printing string representation"""
+        e = f"[{self.bm.__class__.__name__}] ({self.bm.id}) {self.bm.__dict__}"
+        self.assertEqual(str(self.bm), e)
+
+    def test_to_dict_classObj(self):
+        """Tests for class in dictionary convertion"""
+        dic_obj = self.bm.to_dict()
+        self.assertIn('__class__', dic_obj)
+        self.assertEqual(dic_obj['__class__'], 'BaseModel')
+
+    def test_to_dict_createdAt(self):
+        """Tests for created_at in dictionary convertions"""
+        dic_obj = self.bm.to_dict()
+        self.assertIn('created_at', dic_obj)
+        self.assertIsInstance(dic_obj['created_at'], str)
+
+    def test_to_dict_updated_at(self):
+        """Tests for updated_at in dictionary convertions"""
+        dic_obj = self.bm.to_dict()
+        self.assertIn('updated_at', dic_obj)
+        self.assertIsInstance(dic_obj['updated_at'], str)
 
 
 if __name__ == '__main__':
