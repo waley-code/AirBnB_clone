@@ -210,17 +210,21 @@ class HBNBCommand(cmd.Cmd):
         get_key = f'{cls_name}.{ins_id}'
         dic = self.__data[get_key].to_dict()
         for key, value in dic_t.items():
-            value = value.strip('"\'')
             if key in dic.keys():
                 value = type(dic[key])(value)
-            else:
+                if type(value) == str:
+                    value = value.strip('"')
+            elif type(value) == str:
                 try:
                     value = int(value)
                 except ValueError:
                     try:
                         value = float(value)
                     except ValueError:
+                        value = value.strip('"')
                         value = str(value)
+            else:
+                pass
             dic_t.update({key: value})
         dic.update(dic_t)
         f_name = f'models.{self.__cls_dicts[cls_name]}'
