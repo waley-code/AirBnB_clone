@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """
-This is the user module which contains the a class
+This is the State module which contains the class
 State that inherits from BaseModel
 """
-
 from models.base_model import BaseModel
 
 

@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+This module contains the City class and attr
+inheriting from BaseModel
+"""
 from models.base_model import BaseModel
 
 
