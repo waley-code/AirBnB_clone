@@ -5,6 +5,7 @@ This is the console module which contains the HBNBCommand class
 import cmd
 from importlib import import_module
 from models import storage
+from ast import literal_eval
 
 
 class HBNBCommand(cmd.Cmd):
@@ -36,20 +37,33 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """Handle command line input and parse it if necessary"""
-        if "." in line:
-            args = line.replace("(", " ").strip(")").split(".")
-            args.reverse()
-            cm_str = args[0].split()
-            last = ""
-            if len(cm_str) > 1:
-                last = cm_str[1:]
-                if len(last) > 1:
+        if "." in line and "(" in line:
+            if "{" not in line:
+                args = line.replace("(", ",").strip(")").split(",")
+                cm_str = args.pop(0).split(".")
+                cls_name = cm_str[0]
+                cm = cm_str[1]
+                last = ""
+                if len(args) >= 1:
+                    last = args[:]
+                if len(last) == 1:
+                    last = last[0].strip('"')
+                elif len(last) == 3:
                     last = [x.replace('"', "") for x in last]
                     last = f'{last[0]} {last[1]} {last[2]}'
                     last = last.replace(",", "")
                 else:
-                    last = last[0].strip('"')
-            line = f'{cm_str[0]} {args[1]} {last}'
+                    pass
+            else:
+                args = line.replace("(", " ").strip(")")
+                i = args.find("{")
+                diction = args[i:]
+                args = args[: i - 2].split(".")
+                cls_name = args[0]
+                str_li = args[1].split()
+                cm, ins_id = str_li[0], str_li[1].replace('"', "")
+                last = f'{ins_id} {diction}'
+            line = f'{cm} {cls_name} {last}'
         return line
 
     def emptyline(self):
@@ -173,7 +187,6 @@ class HBNBCommand(cmd.Cmd):
             if f'{args[0]}.{args[1]}' not in keys:
                 print("** no instance found **")
                 return
-            c = self.__data.values()
             print("** value missing **")
             return
         else:
@@ -187,38 +200,40 @@ class HBNBCommand(cmd.Cmd):
 
         cls_name = args[0]
         ins_id = args[1]
-        atr_name = args[2]
-        atr_val = args[3]
-        if atr_name in dont:
-            return
-        atr_val = atr_val.strip('"\'')
-        for key, value in self.__data.items():
-            check = key.split('.')
-            if check[0] == cls_name and check[1] == ins_id:
-                dic = value.to_dict()
-                if atr_name in dic.keys():
-                    atr_val = type(dic[atr_name])(atr_val)
-                else:
+        if "{" in args[2]:
+            i = line.find('{')
+            string = line[i:]
+            dic_t = literal_eval(string)
+        else:
+            dic_t = {args[2]: args[3]}
+
+        get_key = f'{cls_name}.{ins_id}'
+        dic = self.__data[get_key].to_dict()
+        for key, value in dic_t.items():
+            value = value.strip('"\'')
+            if key in dic.keys():
+                value = type(dic[key])(value)
+            else:
+                try:
+                    value = int(value)
+                except ValueError:
                     try:
-                        atr_val = int(atr_val)
+                        value = float(value)
                     except ValueError:
-                        try:
-                            atr_val = float(atr_val)
-                        except ValueError:
-                            atr_val = str(atr_val)
-                dic.update({atr_name: atr_val})
-                cls_name = dic['__class__']
-                f_name = f'models.{self.__cls_dicts[cls_name]}'
-                module = import_module(f_name)
-                Class = getattr(module, cls_name)
-                storage.new(Class(**dic))
-                storage.save()
+                        value = str(value)
+            dic_t.update({key: value})
+        dic.update(dic_t)
+        f_name = f'models.{self.__cls_dicts[cls_name]}'
+        module = import_module(f_name)
+        Class = getattr(module, cls_name)
+        storage.new(Class(**dic))
+        storage.save()
 
     def do_count(self, line):
         """print number of instances of a class"""
         count = 0
         line = line.strip()
-        for key, value in self.__data.items():
+        for key in self.__data.keys():
             if key.split(".")[0] == line:
                 count += 1
         print(count)
