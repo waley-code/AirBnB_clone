@@ -2,7 +2,7 @@
 """
 This is the base_model module which contains the class BaseModel
 """
-import uuid
+from uuid import uuid4
 from datetime import datetime
 from models import storage
 
@@ -20,14 +20,14 @@ class BaseModel:
             # use kwargs to create instance if it's not empty
             kwargs_copy = kwargs.copy()
             del kwargs_copy['__class__']
-            nc = datetime.fromisoformat(kwargs_copy['created_at'])
-            nu = datetime.fromisoformat(kwargs['updated_at'])
-            kwargs_copy.update({'created_at': nc, 'updated_at': nu})
             for key, value in kwargs_copy.items():
+                if key in ['created_at', 'updated_at']:
+                    value = datetime.fromisoformat(value)
+                    kwargs_copy.update({key: value})
                 setattr(self, key, value)
         else:
             # creates instances if kwargs is empty
-            self.id = str(uuid.uuid4())
+            self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             storage.new(self)
