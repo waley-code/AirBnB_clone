@@ -23,6 +23,7 @@ class BaseModel:
             for key, value in kwargs_copy.items():
                 if key in ['created_at', 'updated_at']:
                     value = datetime.fromisoformat(value)
+                    kwargs_copy.update({key: value})
                 setattr(self, key, value)
         else:
             # creates instances if kwargs is empty

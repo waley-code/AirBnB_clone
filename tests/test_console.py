@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Tests HBNBCommand commands in console module"""
 
-from AirBnB_clone.console import HBNBCommand
+from console import HBNBCommand
 from datetime import datetime
 import unittest
 
