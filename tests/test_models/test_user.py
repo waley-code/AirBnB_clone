@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""This module contains unittests for User class"""
 
 from models.user import User
 import unittest
