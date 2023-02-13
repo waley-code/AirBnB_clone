@@ -53,7 +53,7 @@ class TestBaseModel(unittest.TestCase):
         
     def test_save(self):
         """tests save method"""
-        updated_at_before = self.bm.updated_at
+        pre = self.bm.updated_at
         self.bm.save()
         self.assertNotEqual(pre, self.bm.updated_at)
 
