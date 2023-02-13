@@ -55,8 +55,7 @@ class TestBaseModel(unittest.TestCase):
         """tests save method"""
         updated_at_before = self.bm.updated_at
         self.bm.save()
-        updated_at_after = self.bm.updated_at
-        self.assertNotEqual(updated_at_before, updated_at_after)
+        self.assertNotEqual(pre, self.bm.updated_at)
 
     def test_instantiation(self):
         """tests all instantiation of BaseModel"""

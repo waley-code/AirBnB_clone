@@ -6,7 +6,7 @@ from datetime import datetime
 import unittest
 
 
-class TesHBNBCommand(unittest.TestCase):
+class TestHBNBCommand(unittest.TestCase):
     """Tests methods in User class"""
 
     def setUp(self):

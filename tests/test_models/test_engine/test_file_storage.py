@@ -6,6 +6,7 @@ import json
 from io import StringIO
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
+from os import path
 
 
 class TestFileStorage(unittest.TestCase):
@@ -36,8 +37,9 @@ class TestFileStorage(unittest.TestCase):
         old_f = open('file.json', 'r')
         old_content = old_f.read()
         self.storage.save()
+        self.assertTrue(path.exists("file.json"))
         new_f = open('file.json', 'r')
-        new_content = new_f.close()
+        new_content = new_f.read()
         self.assertNotEqual(old_content, new_content)
         old_f.close()
         new_f.close()
