@@ -16,7 +16,10 @@ class TestFileStorage(unittest.TestCase):
         """Sets up instances needed for tests"""
         self.storage = FileStorage()
         self.model = BaseModel()
+        self.model_2 = BaseModel()
+        self.file_path = "file.json"
         self.e = f'{self.model.__class__.__name__}.{self.model.id}'
+        self.f = f'{self.model_2.__class__.__name__}.{self.model_2.id}'
 
     def test_all(self):
         """Tests for the all method"""
@@ -34,20 +37,18 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Tests for the save method"""
         self.storage.new(self.model)
-        old_f = open('file.json', 'r')
-        old_content = old_f.read()
+        self.storage.new(self.model_2)
         self.storage.save()
-        self.assertTrue(path.exists("file.json"))
-        new_f = open('file.json', 'r')
-        new_content = new_f.read()
-        self.assertNotEqual(old_content, new_content)
-        old_f.close()
-        new_f.close()
+        with open(self.file_path, 'r') as f:
+            data = json.load(f)
+        self.assertIn(self.e, data.keys())
+        self.assertIn(self.f, data.keys())
 
     def test_reload(self):
         """Tests for the reload method"""
         self.storage.new(self.model)
         self.storage.save()
-        self.storage.reload()
-        result = self.storage.all()
+        file_storage_2 = FileStorage()
+        file_storage_2.reload()
+        result = file_storage_2.all().keys()
         self.assertIn(self.e, result)
