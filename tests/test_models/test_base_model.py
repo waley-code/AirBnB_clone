@@ -50,11 +50,12 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(dic, dict)
         self.assertIsInstance(dic['updated_at'], str)
         self.assertIsInstance(dic['created_at'], str)
-
-    def test_save(self):
-        """ test the save method"""
-        pre = self.bm.updated_at
+        
+    def test_save_method(self):
+        updated_at_before = self.bm.updated_at
         self.bm.save()
+        updated_at_after = self.bm.updated_at
+        self.assertNotEqual(updated_at_before, updated_at_after)
 
     def test_instantiation(self):
         """tests all instantiation of BaseModel"""
