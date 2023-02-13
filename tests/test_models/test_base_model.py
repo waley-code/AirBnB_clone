@@ -55,6 +55,7 @@ class TestBaseModel(unittest.TestCase):
         """ test the save method"""
         pre = self.bm.updated_at
         self.bm.save()
+        self.assertNotEqual(pre, self.bm.updated_at)
 
     def test_instantiation(self):
         """tests all instantiation of BaseModel"""
