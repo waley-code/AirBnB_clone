@@ -1,9 +1,11 @@
 body{
-    position: relative;
+    margin: 0px;
+    padding: 0px;
     color: #484848;
     font-size: 14px;
     font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;;
 }
-main{
-    height: 600px;
+.container{
+    max-width: 1000px;
+    margin: 30px auto 30px auto;
 }
