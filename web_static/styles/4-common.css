@@ -1,4 +1,5 @@
 body{
+    position: relative;
     margin: 0px;
     padding: 0px;
     color: #484848;
@@ -8,4 +9,5 @@ body{
 .container{
     max-width: 1000px;
     margin: 30px auto 30px auto;
+    margin-bottom: 100px;
 }
